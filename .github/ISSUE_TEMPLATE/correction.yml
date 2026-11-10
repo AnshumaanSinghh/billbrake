@@ -1,0 +1,25 @@
+name: Report a correction
+description: Something in the guide is wrong or out of date.
+labels: ["correction"]
+body:
+  - type: input
+    id: service
+    attributes:
+      label: Service
+      placeholder: Vercel
+    validations:
+      required: true
+  - type: textarea
+    id: wrong
+    attributes:
+      label: What is wrong or out of date?
+      placeholder: The guide says there is no hard cap, but one was added in October.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Link to the official page that shows the current behaviour
+      placeholder: https://
+    validations:
+      required: true

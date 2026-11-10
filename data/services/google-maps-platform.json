@@ -1,0 +1,52 @@
+{
+  "id": "google-maps-platform",
+  "name": "Google Maps Platform",
+  "category": "Maps",
+  "website": "https://mapsplatform.google.com",
+  "verdict": "cappable",
+  "summary": "Google Maps Platform bills your Google Cloud billing account past a monthly free amount per product, but you can put a hard cap on each API by lowering its daily quota.",
+  "free_tier": "Since March 1, 2025, each billable product (SKU) has a monthly free usage cap instead of the old $200 monthly credit. Google lists 10,000 free calls a month per SKU for Essentials, 5,000 for Pro and 1,000 for Enterprise. Free usage resets on the first day of each month. You still need a Google Cloud project with billing turned on to use the APIs.",
+  "over_free_tier": "Usage above each SKU's free cap is charged pay-as-you-go to your Cloud billing account, priced per 1,000 billable events. Google adds up usage across all projects linked to the same billing account. Nothing stops by default. If you are on a subscription plan, calls beyond the plan's limit cost extra.",
+  "hard_cap": "Yes, but by usage, not by dollars. Google's docs say: to put a hard cap on usage of an API, lower its per-day quota. Once the quota is used up, further requests to that API are refused for the day. You must set a quota for each API you use. Budgets do not cap anything, and Google Cloud's spend cap budgets do not list Google Maps Platform as an eligible service.",
+  "how_to_cap": [
+    "Open the Quotas page in the Google Cloud console.",
+    "Select the API you want to limit (for example a Maps, Routes or Places API).",
+    "Edit the per-day quota and lower it.",
+    "To stay inside a SKU's monthly free cap, divide the free cap by 31 (the most days in a month) and round down. Use that as the daily limit.",
+    "Check how each SKU is billed before you pick a number. For example, some Routes calls bill per element, so set the limit on elements, not requests.",
+    "Repeat for every API the project uses."
+  ],
+  "how_to_alert": [
+    "In the Google Cloud console, open the Navigation menu and select Billing. Under Cost management, select Budgets & alerts.",
+    "Click Create budget. In the Define section, select Alerts only.",
+    "Set the scope (projects and services), the amount, and the alert thresholds, then click Finish.",
+    "You can also set quota alerts to be told when API usage gets close to a quota limit."
+  ],
+  "never_capped": [
+    "Any API you did not set a lower quota for.",
+    "Other Google Cloud services on the same billing account, such as the Gemini API, if they are enabled in the same project as your Maps key.",
+    "Costs that build up before budget alerts arrive. Google says there is a delay between usage and cost reporting."
+  ],
+  "gotchas": [
+    "A budget does not cap usage. Google's docs say setting a budget does not automatically cap Google Cloud or Google Maps Platform usage or spending.",
+    "Raising a quota does not protect you. Google says a quota increase does not cap your spending.",
+    "Maps JavaScript keys sit in your public web pages. Restrict each key to your websites or apps and to only the APIs it needs. Google says you are responsible for charges from abuse of an unrestricted key.",
+    "If the Gemini API is turned on in the same Google Cloud project, an old unrestricted Maps key can be used to call Gemini and bill you. Keep Maps and AI work in separate projects.",
+    "Free usage caps are per SKU, not one shared pool. A single page load can use several SKUs.",
+    "The old $200 monthly credit no longer exists. Older tutorials that mention it are out of date."
+  ],
+  "story": {
+    "text": "In August 2026 a developer posted on Google's AI developer forum about a bill of about $19,000. It came from Gemini API calls made with an old Maps API key created in 2018 for a project that never went live. The developer believed the key gained Gemini access after Gemini was enabled. Google support later approved a billing adjustment of $19,522.33, and the developer said in September 2026 that it had been processed as credits.",
+    "url": "https://discuss.ai.google.dev/t/stuck-for-60-days-with-19-000-bill-due-to-gemini-privilege-escalation-on-a-legacy-2018-maps-key-case-id-72347951/179135"
+  },
+  "sources": [
+    { "title": "Google Maps Platform: Manage your costs", "url": "https://developers.google.com/maps/billing-and-pricing/manage-costs" },
+    { "title": "Google Maps Platform: Billing and pricing overview", "url": "https://developers.google.com/maps/billing-and-pricing/overview" },
+    { "title": "Google Maps Platform: Getting started", "url": "https://developers.google.com/maps/get-started" },
+    { "title": "Google Cloud: Create, edit, or delete budgets and budget alerts", "url": "https://docs.cloud.google.com/billing/docs/how-to/budgets" },
+    { "title": "Google Cloud: Manage spend cap budgets (eligible services)", "url": "https://docs.cloud.google.com/billing/docs/how-to/budgets-spend-caps" },
+    { "title": "The Register: Dev stunned by $82K Gemini bill (old Google API keys gaining Gemini access)", "url": "https://www.theregister.com/2026/03/03/gemini_api_key_82314_dollar_charge/" },
+    { "title": "Google AI Developers Forum: Stuck for 60 days with $19,000 bill due to Gemini on a legacy 2018 Maps key", "url": "https://discuss.ai.google.dev/t/stuck-for-60-days-with-19-000-bill-due-to-gemini-privilege-escalation-on-a-legacy-2018-maps-key-case-id-72347951/179135" }
+  ],
+  "last_verified": "2026-11-09"
+}

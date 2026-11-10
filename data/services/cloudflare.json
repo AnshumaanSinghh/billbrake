@@ -1,0 +1,49 @@
+{
+  "id": "cloudflare",
+  "name": "Cloudflare (Workers, R2 and developer platform)",
+  "category": "Cloud",
+  "website": "https://www.cloudflare.com",
+  "verdict": "alerts-only",
+  "summary": "On the Workers Free plan, usage stops at the daily limits instead of costing money. Paid usage (Workers Paid, R2, D1 and others) has no spending cap, only budget alerts.",
+  "free_tier": "The Workers Free plan includes limited use of Workers, Pages Functions, Workers KV, Hyperdrive and SQLite-backed Durable Objects. For example, Workers Free allows 100,000 requests per day, resetting at midnight UTC. R2 storage has a monthly free amount of storage and operations, and R2 does not charge for egress (data sent out to the internet).",
+  "over_free_tier": "On Workers Free, going over a daily limit makes requests or operations fail with an error (for Workers requests, Error 1027) until the limit resets. You are not charged. The Workers Paid plan costs a minimum of $5 USD per month and charges for usage beyond its included amounts. R2 and other usage-based products charge for usage beyond their free amounts.",
+  "hard_cap": "No cap for paid usage. Budget alerts only send an email. Cloudflare's docs say they do not pause or cap usage. The only hard stop is the Workers Free plan, where its daily limits block usage instead of billing you.",
+  "how_to_cap": [
+    "Stay on the Workers Free plan if you need a guarantee. Its limits stop usage instead of charging you.",
+    "Do not upgrade to Workers Paid or rely on usage-billed products like R2 or D1 if you cannot afford an open-ended bill. Cloudflare offers no spending cap for them."
+  ],
+  "how_to_alert": [
+    "Log in to the Cloudflare dashboard and select your account.",
+    "Go to Manage Account > Billing.",
+    "Select Billable Usage.",
+    "Select Create budget alert.",
+    "Enter an Alert name, an optional Description, a dollar threshold, and one or more email recipients.",
+    "Select Save.",
+    "Since July 2026 Cloudflare is adding a default $10 account-level budget alert to eligible Pay-as-you-go accounts that do not have one. You can change or remove it on the same page."
+  ],
+  "never_capped": [
+    "All usage-based charges on Workers Paid, R2, D1, Durable Objects, KV and other metered products. Budget alerts never stop them.",
+    "Recurring subscription fees, such as the Workers Paid plan fee. These are also left out of budget alert totals."
+  ],
+  "gotchas": [
+    "Budget alerts are not real time. Usage is processed daily, so an alert fires the day after you cross the threshold.",
+    "Budget alerts are only for Pay-as-you-go accounts. Enterprise contract accounts are not supported.",
+    "A bug such as a loop that keeps writing to D1 can run up a large bill before any alert arrives (see the story below).",
+    "Some products round billable usage up to the next billing unit. On R2, for example, one million and one billable operations are billed as two million.",
+    "The default $10 alert only turns on at the start of your next billing cycle, so it does not cover the current one."
+  ],
+  "story": {
+    "text": "A solo developer whose Cloudflare bill was usually about $5 a month had two bugs that wrote about 4.8 billion rows to D1 in January 2026. The invoice came to about $4,600. He wrote that D1 had no billing cap. Cloudflare waived the invoice after 18 days, but some services were disabled while the bill was unpaid.",
+    "url": "https://littlebearapps.com/blog/d1-billing-disaster-circuit-breakers/"
+  },
+  "sources": [
+    { "title": "Cloudflare Billing docs: Budget alerts", "url": "https://developers.cloudflare.com/billing/manage/budget-alerts/" },
+    { "title": "Cloudflare changelog: Billing (budget alerts on by default, July 2026)", "url": "https://developers.cloudflare.com/changelog/product/billing/" },
+    { "title": "Cloudflare changelog: Introducing Billable Usage dashboard and Budget alerts", "url": "https://developers.cloudflare.com/changelog/post/2026-04-13-billable-usage-dashboard-and-budget-alerts/" },
+    { "title": "Cloudflare Workers: Pricing", "url": "https://developers.cloudflare.com/workers/platform/pricing/" },
+    { "title": "Cloudflare Workers: Limits", "url": "https://developers.cloudflare.com/workers/platform/limits/" },
+    { "title": "Cloudflare R2: Pricing", "url": "https://developers.cloudflare.com/r2/pricing/" },
+    { "title": "Little Bear Apps: My $5/month Cloudflare bill hit $4,868 because of an infinite loop", "url": "https://littlebearapps.com/blog/d1-billing-disaster-circuit-breakers/" }
+  ],
+  "last_verified": "2026-11-09"
+}

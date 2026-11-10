@@ -1,0 +1,50 @@
+{
+  "id": "supabase",
+  "name": "Supabase",
+  "category": "Backend",
+  "website": "https://supabase.com",
+  "verdict": "cappable",
+  "summary": "The Free plan never charges you, and the Pro plan has a Spend Cap that is on by default, but the cap does not cover compute and some add-ons.",
+  "free_tier": "The Free plan costs nothing and does not charge for overage. It includes up to 2 active projects with a small database, file storage, egress and monthly active users. The exact limits are listed on the pricing page. Free projects are paused after 1 week of inactivity.",
+  "over_free_tier": "On the Free plan you are not charged. Supabase notifies you when you go over the Free plan quota. You get one grace period. After that, your services can be restricted under the Fair Use Policy, for example by pausing projects, making them read-only, or returning 402 errors to API requests. Restrictions lift when your quota refills at the start of the next billing cycle, or when you upgrade. On the Pro plan with the Spend Cap off, extra usage is billed at the per-unit prices on the pricing page.",
+  "hard_cap": "Yes, on the Pro plan. The Spend Cap is on by default. When it is on and you go over the quota for a covered item (such as egress, disk size, storage, function invocations, monthly active users or realtime messages), further use of that item is blocked until the next billing cycle and you are not charged for the overage. It is not a dollar budget: you cannot set an amount, and it does not send cost notifications. It does not cover compute or other opt-in add-ons, so those still charge. Organizations billed through AWS Marketplace cannot use the Spend Cap. The Spend Cap is only available on the Pro plan.",
+  "how_to_cap": [
+    "When you create a Pro plan organization, leave the Spend Cap turned on.",
+    "To check or change it later, open your organization's billing page in the Supabase dashboard.",
+    "Go to the Cost Control section and make sure the Spend Cap is enabled.",
+    "Remember that each extra project adds its own compute cost, which the Spend Cap does not limit."
+  ],
+  "how_to_alert": [
+    "Supabase has no custom budget alerts. The docs say the Spend Cap does not send notifications when certain costs are reached.",
+    "Watch the organization's usage page in the dashboard.",
+    "Check the Upcoming Invoice section of the organization's billing page. It shows current spending and an estimate for the billing cycle.",
+    "Supabase emails you when you exceed your plan's quota."
+  ],
+  "never_capped": [
+    "Compute for each project (the Pro plan includes compute credits that cover one small project; each extra project adds its own compute cost)",
+    "Branching compute",
+    "Read replica compute",
+    "Custom domain",
+    "Additionally provisioned disk IOPS and disk throughput",
+    "IPv4 address",
+    "Log drain hours and log drain events",
+    "Multi-Factor Authentication Phone",
+    "Point-in-Time Recovery"
+  ],
+  "gotchas": [
+    "If you turn the Spend Cap off, overage on egress, storage and other usage items is billed with no limit.",
+    "Every new project on a paid organization adds compute cost, billed hourly. Pause or delete projects you are not using. Paused projects are not charged.",
+    "The Spend Cap is not a dollar limit. You cannot say 'stop at $50'.",
+    "With the Spend Cap on, hitting a quota blocks that feature for your users until the next billing cycle. If you keep going over quotas, services can be restricted under the Fair Use Policy.",
+    "On the Free plan you get only one grace period for going over limits. If you go over again later, restrictions can apply right away.",
+    "Organizations billed through AWS Marketplace cannot use the Spend Cap."
+  ],
+  "story": null,
+  "sources": [
+    { "title": "Supabase Docs: Control your costs (Spend Cap)", "url": "https://supabase.com/docs/guides/platform/cost-control" },
+    { "title": "Supabase Docs: Billing FAQ", "url": "https://supabase.com/docs/guides/platform/billing-faq" },
+    { "title": "Supabase Docs: About billing on Supabase", "url": "https://supabase.com/docs/guides/platform/billing-on-supabase" },
+    { "title": "Supabase Pricing", "url": "https://supabase.com/pricing" }
+  ],
+  "last_verified": "2026-11-09"
+}

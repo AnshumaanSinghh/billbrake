@@ -1,0 +1,57 @@
+{
+  "id": "firebase",
+  "name": "Firebase",
+  "category": "Backend",
+  "website": "https://firebase.google.com",
+  "verdict": "partial",
+  "summary": "The free Spark plan just stops when you hit a limit, but on the pay-as-you-go Blaze plan you can only cap a few services, and the cap is in Preview.",
+  "free_tier": "The Spark plan needs no payment method. It includes no-cost usage quotas for Firebase products, applied per project. Some products and paid Google Cloud features are not available on Spark. The Blaze plan includes the same no-cost usage, and eligible users may get free Google Cloud credit when they upgrade.",
+  "over_free_tier": "On Spark, when a project goes over a product's quota, that product is shut off for the rest of the month. On Blaze, you pay for usage above the no-cost quotas, billed to your Cloud Billing account. There is no overall limit.",
+  "hard_cap": "Only for some services. Spend cap budgets, in Preview, pause one service for the rest of the month when it reaches 100% of its budget. They are only available for Firebase AI Logic, Firebase App Hosting, Cloud Functions for Firebase and Firebase Extensions. Firebase says they are not hard caps: enforcement can lag by several minutes, and spend in that time is billed. Other products, such as Cloud Firestore, Realtime Database, Cloud Storage and Hosting, have no cap. Normal budgets only send emails. The only other way to stop everything is to write code that disables billing on the project when a budget alert fires.",
+  "how_to_cap": [
+    "You need the Billing Account Administrator role, the Project Owner role, or both Billing Account Costs Manager and Project Editor.",
+    "In the Firebase console, open your project and go to Settings > Usage and billing > Details & settings.",
+    "Find the Service-level spend caps card.",
+    "Find the service, enter a monthly budget amount, and click Configure.",
+    "Repeat for each eligible service you use. Each cap covers one service in one project.",
+    "Set each amount slightly below your real limit, because enforcement can lag.",
+    "For services without spend caps, Firebase suggests using budget notifications to disable Cloud Billing on the project with your own code. See the Google Cloud guide linked in sources."
+  ],
+  "how_to_alert": [
+    "You need the Billing Account Administrator role on the linked Cloud Billing account.",
+    "In the Firebase console, go to Settings > Usage and billing > Details & settings.",
+    "In the Budgets alerts section, click Create first budget. This opens the Budgets & alerts page in the Google Cloud console.",
+    "Name the budget and set the scope (for example, All services).",
+    "Under Amount, choose a Budget type, such as a set amount of money.",
+    "Under Percent of budget, add alert thresholds, for example 50% and 100% of Actual.",
+    "Save. Alerts go to billing account admins and users by default. They do not pause anything."
+  ],
+  "never_capped": [
+    "Cloud Firestore, Realtime Database, Cloud Storage, Firebase Hosting and any other product not on the spend cap list.",
+    "Spend during the delay before a spend cap is enforced.",
+    "Anything else in the same Google Cloud project, such as other Google Cloud services."
+  ],
+  "gotchas": [
+    "Budget alerts do not cap your usage or charges. They only send emails.",
+    "Alert emails can be slow. Firebase says a 1% alert email may take a couple of hours or a couple of days.",
+    "Linking a billing account, including one with Google Cloud trial credits, automatically moves the project to Blaze.",
+    "Spend caps are in Preview and may change.",
+    "If you lift a spend cap and change nothing else, there is no limit for the rest of that month.",
+    "Unbounded queries and Cloud Functions that trigger themselves in a loop are a common cause of runaway bills. Test with the Firebase Local Emulator Suite first.",
+    "Disabling billing with code shuts down all resources in the project, including free-tier services. Google warns that resources might be irretrievably deleted, recovery is not guaranteed, and because notifications are delayed it does not guarantee you stay under budget."
+  ],
+  "story": {
+    "text": "In December 2020, the startup Milkie Way reported a Google Cloud bill of just under $72,000 after a test. A scraper on Cloud Run looped on itself and made about 116 billion Firestore reads, and the charges kept climbing for about two hours. Their Firebase project had been upgraded to a paid plan because of activity in Google Cloud. Google waived the bill as a one-time gesture.",
+    "url": "https://www.theregister.com/2020/12/10/google_cloud_over_run/"
+  },
+  "sources": [
+    { "title": "Firebase Docs: Avoid surprise bills", "url": "https://firebase.google.com/docs/projects/billing/avoid-surprise-bills" },
+    { "title": "Firebase Docs: Spend caps", "url": "https://firebase.google.com/docs/projects/billing/spend-caps" },
+    { "title": "Firebase Docs: Set up budget alerts", "url": "https://firebase.google.com/docs/projects/billing/budget-alerts" },
+    { "title": "Firebase Docs: Firebase pricing plans", "url": "https://firebase.google.com/docs/projects/billing/firebase-pricing-plans" },
+    { "title": "Firebase Pricing", "url": "https://firebase.google.com/pricing" },
+    { "title": "Google Cloud Docs: Disable billing usage with notifications", "url": "https://docs.cloud.google.com/billing/docs/how-to/disable-billing-with-notifications" },
+    { "title": "The Register: How a free trial experiment ended with a $72,000 bill overnight", "url": "https://www.theregister.com/2020/12/10/google_cloud_over_run/" }
+  ],
+  "last_verified": "2026-11-09"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "mapbox",
+  "name": "Mapbox",
+  "category": "Maps",
+  "website": "https://www.mapbox.com",
+  "verdict": "alerts-only",
+  "summary": "Mapbox has a monthly free tier for each service, but once you add a payment method there is no spending cap, only email alerts.",
+  "free_tier": "You can sign up without a credit card and use Mapbox with trial usage limits. If you add a payment method, you get pay-as-you-go access with a monthly free tier for each service (for example a number of free map loads). The free tier resets on the first day of each monthly billing period. Exact amounts differ by service and are listed on Mapbox's pricing page.",
+  "over_free_tier": "Without a payment method, reaching a trial limit (or the end of the trial) gives you a Console alert and an email, and you add a payment method to continue. With a payment method, usage above the free tier is added to your monthly invoice. On automatic payments, your card is charged when the invoice is finalized on the last day of the month. Nothing pauses automatically.",
+  "hard_cap": "No. Mapbox's docs say plainly that Mapbox does not provide the ability to cap your monthly billing and that accounts do not support a spending cap. Usage notifications never pause your service. The only way to stop charges is to stop the traffic yourself, by deleting or rotating your access tokens, which turns off any maps that use them.",
+  "how_to_cap": [],
+  "how_to_alert": [
+    "Log in and open the Usage notifications page in your account settings.",
+    "Choose a service and set a monthly threshold in that service's usage units.",
+    "Add more thresholds per service if you want several warnings. Alerts are sent by email only.",
+    "Mapbox also emails you automatically the first time your account goes past a service's free tier in a billing period.",
+    "If an alert shows usage you do not expect, delete or rotate the access token to stop the traffic."
+  ],
+  "never_capped": [
+    "All usage above the free tier once a payment method is on file. Alerts never pause service.",
+    "Usage from apps that still use your trial token after you add a payment method. Mapbox warns that this can generate billable usage."
+  ],
+  "gotchas": [
+    "When you add a payment method, Mapbox offers to Rotate token or Keep token. Rotating (recommended by Mapbox) replaces your trial token so old copies stop working.",
+    "Public tokens (pk) sit in your web pages, and anyone can copy them. Add URL restrictions so the token only works from your sites. Mapbox calls this a best-effort protection, not a guarantee.",
+    "Never put a secret token (sk) in front-end code or a public repo. Use it only from a server.",
+    "Deleting a token stops new requests right away, but cached responses can keep working for a while depending on the service.",
+    "Mapbox suggests a workaround instead of a cap: add a fixed amount of prepaid credit and rotate your tokens when spending reaches your target. This still needs you to act; nothing stops on its own.",
+    "Each Mapbox service has its own free tier. Going over on one service is billed even if others are unused."
+  ],
+  "story": null,
+  "sources": [
+    { "title": "Mapbox FAQ: Am I able to set a cap for monthly spending?", "url": "https://docs.mapbox.com/accounts/faq/can-i-set-up-a-cap-for-monthly-spending/" },
+    { "title": "Mapbox docs: Invoices and billing", "url": "https://docs.mapbox.com/accounts/guides/invoices/" },
+    { "title": "Mapbox docs: Sign up with Mapbox", "url": "https://docs.mapbox.com/accounts/guides/signup/" },
+    { "title": "Mapbox docs: Access tokens", "url": "https://docs.mapbox.com/accounts/guides/tokens/" },
+    { "title": "Mapbox pricing", "url": "https://www.mapbox.com/pricing" }
+  ],
+  "last_verified": "2026-11-09"
+}

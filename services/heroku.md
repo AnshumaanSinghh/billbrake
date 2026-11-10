@@ -1,0 +1,52 @@
+<!-- Generated from data/services/heroku.json by scripts/build.mjs. Edit the JSON, not this file. -->
+# Heroku
+
+**🔴 No cap.** Heroku has no free tier and no spending cap, but most charges are fixed per dyno or add-on, so your bill mostly depends on what you leave running.
+
+[Website](https://www.heroku.com) · Category: Hosting · Last verified: 2026-11-09
+
+## Free tier
+
+There is no free tier. Heroku removed free dynos, free Heroku Postgres and free Heroku Data for Redis on November 28, 2022. The cheapest option is the Eco dyno plan, a flat monthly fee for a shared pool of dyno hours.
+
+## What happens when you go over
+
+Paid dynos and data add-ons are charged for the time they exist, prorated to the second, whether or not they get traffic. Each has a maximum monthly price, which is what you pay if it runs all month. If your Eco dyno hours run out, all Eco dynos on your account sleep for the rest of the month, and you cannot buy more hours. Metered add-ons are charged by usage, for things like storage, bandwidth or AI tokens.
+
+## Can you set a hard cap?
+
+No. Heroku's docs describe no spending cap or budget setting. Because most prices have a monthly maximum per dyno or add-on, the main risks are leaving resources running, scaling up dyno counts, autoscaling, and metered add-ons.
+
+## How to set alerts
+
+1. Eco dynos: Heroku emails you at 80% and 100% of your monthly Eco dyno hours. There is nothing to set up.
+2. Autoscaling (Performance, Private and Shield dynos only): on your app's Resources tab, click Enable Autoscaling, set the minimum and maximum dyno count, turn on Email Notifications to get an email when the web dyno count reaches the maximum, and click Confirm. The maximum you choose limits how many dynos autoscaling can add.
+3. To check spend, open the Billing tab in your account and look at Current Usage in the Billing Information section. It updates nightly.
+
+## Charges a cap will not stop
+
+- Every dyno scaled above 0, for as long as it runs, even with no traffic.
+- Data add-ons such as Heroku Postgres, for as long as they exist.
+- Metered add-ons, which are charged by usage.
+- The Eco plan fee, charged every month you are subscribed, even if you use no Eco dynos.
+
+## Watch out for
+
+- Heroku bills by wall-clock time, not by traffic. An idle paid dyno costs the same as a busy one.
+- Review apps and one-off dynos also count toward usage.
+- Eco worker dynos never sleep, so they can use up your Eco hours by running all month.
+- If you subscribe to Eco after the first of the month, you still pay the full monthly fee for that month.
+- Destroying a data add-on also destroys its data. Back up before you delete to save money.
+- In February 2026, Heroku said it is moving to a sustaining engineering model, focused on stability and support rather than new features. It said there are no changes to pricing or billing for credit card customers.
+
+## Sources
+
+- [Heroku Dev Center: Usage & Billing](https://devcenter.heroku.com/articles/usage-and-billing)
+- [Heroku Dev Center: Eco Dyno Hours](https://devcenter.heroku.com/articles/eco-dyno-hours)
+- [Heroku Dev Center: Autoscaling](https://devcenter.heroku.com/articles/autoscaling)
+- [Heroku Dev Center changelog: Free Heroku Dynos, Heroku Postgres and Heroku Data for Redis are no longer available](https://devcenter.heroku.com/changelog-items/2502)
+- [Heroku Blog: An Update on Heroku (February 6, 2026)](https://www.heroku.com/blog/an-update-on-heroku/)
+
+---
+
+Something out of date? [Report a correction](https://github.com/AnshumaanSinghh/billbrake/issues/new?template=correction.yml&title=Correction%3A%20Heroku) or edit [data/services/heroku.json](../data/services/heroku.json). [Back to the full list](../README.md)

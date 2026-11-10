@@ -1,0 +1,39 @@
+{
+  "id": "algolia",
+  "name": "Algolia",
+  "category": "Developer tools",
+  "website": "https://www.algolia.com",
+  "verdict": "alerts-only",
+  "summary": "The free plan is blocked or suspended when you reach its limits, but the pay-as-you-go Grow plans have no spending cap, only a budget notification.",
+  "free_tier": "Algolia has a free plan (called Build in its terms, and Free on the pricing page). It needs no credit card and includes a monthly number of search requests and a number of records. The numbers differ between sources: the pricing page lists 50K records, while the Build plan terms (updated September 23, 2024) say up to one million records. Check the pricing page for the current limits.",
+  "over_free_tier": "On the free plan, the Build plan terms say Algolia may suspend the service or add an Algolia attribution to your search results until you choose a plan that fits your usage. Algolia's support articles say a free app is blocked until the next billing cycle when it has no linked billing details. On the Grow and Grow Plus plans, you pay monthly for usage above each product's included amount, with no ceiling. For records over the included amount, you are charged based on the maximum number of records you reached.",
+  "hard_cap": "No. On paid pay-as-you-go plans there is no setting that stops charges. Algolia's support article describes a Cost Management feature where you set a budget and are notified if your invoice goes over it. It only notifies you.",
+  "how_to_cap": [],
+  "how_to_alert": [
+    "In the Algolia dashboard, go to Billing > Cost Management.",
+    "Set a budget. Algolia notifies you if your invoice exceeds it.",
+    "Check your usage under API Monitoring > Usage in the dashboard. It shows records and search and indexing operations for the current billing cycle.",
+    "Note: the alerts under Settings > Infrastructure > Alerts are for server status and capacity on dedicated-server plans, not for spending."
+  ],
+  "never_capped": [
+    "Everything on the Grow and Grow Plus plans: search requests, records, recommendations and crawls above the included amounts"
+  ],
+  "gotchas": [
+    "With search-as-you-type, every keystroke counts as one search request. By default there is one request for each keystroke and each index. Algolia suggests debouncing searches to send fewer requests.",
+    "Records are billed on the maximum number you reached during the period, not the number you have at the end.",
+    "The free plan limits differ between the pricing page and the Build plan terms. Do not rely on an old number.",
+    "Cost Management only notifies you. It does not stop search or indexing.",
+    "Several of Algolia's support pages block automated access, so double-check these steps in your dashboard."
+  ],
+  "story": null,
+  "sources": [
+    { "title": "Algolia: Build Plan Specific Terms", "url": "https://www.algolia.com/policies/build-plan-specific-terms" },
+    { "title": "Algolia Pricing", "url": "https://www.algolia.com/pricing" },
+    { "title": "Algolia Docs: Track usage", "url": "https://www.algolia.com/doc/guides/going-to-production/track-usage" },
+    { "title": "Algolia Docs: Optimize search request usage (JavaScript)", "url": "https://www.algolia.com/doc/guides/building-search-ui/going-further/optimize-search-request-usage/js" },
+    { "title": "Algolia Support: How can I monitor my application's monthly costs?", "url": "https://support.algolia.com/hc/en-us/articles/11892882592529-How-can-I-monitor-my-application-s-monthly-costs" },
+    { "title": "Algolia Support: How does Algolia count search requests, operations and records?", "url": "https://support.algolia.com/hc/en-us/articles/17245378392977-How-does-Algolia-count-search-requests-operations-and-records" },
+    { "title": "Algolia Support: Why is my app blocked?", "url": "https://support.algolia.com/hc/en-us/articles/4406981959441-Why-is-my-app-blocked" }
+  ],
+  "last_verified": "2026-11-09"
+}

@@ -1,0 +1,48 @@
+{
+  "id": "upstash",
+  "name": "Upstash",
+  "category": "Database",
+  "website": "https://upstash.com",
+  "verdict": "cappable",
+  "summary": "The free tier needs no card and cannot charge you, and on pay-as-you-go you can set a monthly budget per Redis database that throttles it instead of billing more.",
+  "free_tier": "Every account starts with one free Redis database. No credit card is required. It has limits on data size, monthly commands and monthly bandwidth. The exact numbers are on the pricing page.",
+  "over_free_tier": "On the free tier, when a database goes over its monthly command limit, requests fail with the error 'ERR max requests limit exceeded'. You are not charged. When you add a payment method, every free resource on the account (all Redis databases, plus QStash, Vector, Search and Blob) moves to its paid plan automatically. On pay-as-you-go there is no price ceiling by default: you pay per command, plus storage and bandwidth above the included amounts.",
+  "hard_cap": "Yes, for pay-as-you-go Redis databases. You can set a maximum monthly budget on each database. When the monthly cost reaches the budget, Upstash emails you and throttles (rate limits) the database, and you are not charged beyond the budget. Budgets are set per database. There is no account-wide budget. Budgets are only available on pay-as-you-go, not on Fixed plans. Fixed plans have a flat monthly price instead.",
+  "how_to_cap": [
+    "Open your Redis database in the Upstash Console.",
+    "Go to the Usage tab.",
+    "Click Change Budget under the cost metric.",
+    "Enter the maximum amount you want to pay each month for this database and save.",
+    "Repeat for every pay-as-you-go database. There is no account-wide budget.",
+    "Optional: for steady, heavy workloads, switch the database to a Fixed plan, which has a flat monthly price."
+  ],
+  "how_to_alert": [
+    "Set a budget on the database as described above. Upstash sends email notifications at 70% and 90% of the monthly budget.",
+    "Upstash also emails you when a database goes over its plan limits."
+  ],
+  "never_capped": [
+    "The Database Surplus Charge: on pay-as-you-go, databases beyond the first 10 cost extra each month. This is charged on the account, so a database budget does not cap it.",
+    "Fixed plan prices and their read region add-ons (budgets apply only to pay-as-you-go)",
+    "Other Upstash products such as QStash, Vector, Search and Blob. The Redis budget is set on one Redis database, so check each product's own billing settings."
+  ],
+  "gotchas": [
+    "Adding a credit card upgrades every free resource on the account at once. You cannot keep free databases on an account that has a payment method.",
+    "A pay-as-you-go database has no budget until you set one.",
+    "Background job tools (Sidekiq, BullMQ, Celery, cron jobs) send commands all the time, even when idle. On pay-as-you-go this can drive up the command count. Upstash suggests a Fixed plan for these.",
+    "Each replicated write to a read region in a Global database counts as an extra command.",
+    "Lua scripts and transactions count more than one command (each redis.call and MULTI/EXEC are billed).",
+    "If you switch from a Fixed plan to pay-as-you-go in the middle of a month, the budget only tracks pay-as-you-go spending.",
+    "Prod Pack is a paid monthly add-on per database. The docs do not say whether a database budget covers it.",
+    "On Fixed plans with auto-upgrade turned on, hitting the bandwidth or storage limit moves the database to the next, more expensive tier."
+  ],
+  "story": null,
+  "sources": [
+    { "title": "Upstash Docs: Redis Pricing & Billing", "url": "https://upstash.com/docs/redis/overall/billing" },
+    { "title": "Upstash Docs: Account and Billing FAQ", "url": "https://upstash.com/docs/common/account/faq" },
+    { "title": "Upstash Docs: Upgrade Your Database", "url": "https://upstash.com/docs/redis/howto/upgrade-database" },
+    { "title": "Upstash Docs: ERR max requests limit exceeded", "url": "https://upstash.com/docs/redis/troubleshooting/max_requests_limit" },
+    { "title": "Upstash Docs: Update Database Budget (Developer API)", "url": "https://upstash.com/docs/devops/developer-api/redis/update_budget" },
+    { "title": "Upstash Redis Pricing", "url": "https://upstash.com/pricing/redis" }
+  ],
+  "last_verified": "2026-11-09"
+}

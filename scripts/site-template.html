@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BillBrake: hard spending caps for __COUNT__ developer services</title>
+<meta name="description" content="What happens when you pass the free tier of AWS, Vercel, OpenAI, Firebase and __COUNT__ more developer services, and how to set a hard spending cap on each one.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BillBrake">
+<meta property="og:description" content="Which developer services can surprise you with a bill, and how to cap each one. __COUNT__ services, open source.">
+<meta property="og:url" content="__SITE_URL__">
+<meta property="og:image" content="__SITE_URL__og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>">
+<style>
+:root {
+  --bg: #fbfaf8; --panel: #ffffff; --text: #1d1f23; --muted: #5d6470; --line: #e3e1dc; --accent: #0b6e4f;
+  --safe: #1a7f37; --cappable: #0969da; --partial: #bc4c00; --alerts-only: #cf222e;
+  --chip: #f1efea; --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0f1115; --panel: #171a21; --text: #e8eaed; --muted: #9aa3ae; --line: #2a2f39; --accent: #4fd1a5;
+    --safe: #3fb950; --cappable: #58a6ff; --partial: #f0883e; --alerts-only: #ff7b72; --chip: #20242c; --shadow: none; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--accent); }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+header.wrap { padding-top: 48px; padding-bottom: 24px; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 12px; letter-spacing: -0.02em; }
+.tagline { font-size: 1.3rem; font-weight: 700; margin: 0 0 8px; color: var(--accent); }
+.lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 20px; max-width: 46ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; color: var(--muted); font-size: .9rem; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--text); text-decoration: none; font-weight: 600; font-size: .9rem; }
+.btn:hover { border-color: var(--accent); }
+.note { color: var(--muted); font-size: .95rem; margin: 8px 0 0; }
+.legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 8px; margin: 24px 0; }
+.legend button { text-align: left; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--text); cursor: pointer; font: inherit; font-size: .88rem; }
+.legend button[aria-pressed="true"] { border-color: currentColor; outline: 2px solid currentColor; outline-offset: -2px; }
+.legend b { display: block; font-size: .95rem; }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; position: sticky; top: 0; background: var(--bg); padding: 12px 0; z-index: 2; border-bottom: 1px solid var(--line); }
+.controls input, .controls select { font: inherit; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--text); }
+.controls input { flex: 1 1 200px; min-width: 0; }
+.controls select { max-width: 100%; }
+.count { color: var(--muted); font-size: .9rem; margin: 12px 0; }
+.list { display: flex; flex-direction: column; gap: 10px; padding-bottom: 32px; }
+details { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); scroll-margin-top: 80px; }
+details[open] { border-color: var(--muted); }
+summary { list-style: none; cursor: pointer; padding: 14px 16px; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: baseline; }
+summary::-webkit-details-marker { display: none; }
+.name { font-weight: 700; font-size: 1.05rem; }
+.cat { color: var(--muted); font-size: .85rem; font-weight: 400; margin-left: 6px; }
+.pill { font-size: .8rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--chip); white-space: nowrap; }
+.sum { grid-column: 1 / -1; color: var(--muted); font-size: .95rem; }
+.body { padding: 0 16px 16px; border-top: 1px solid var(--line); }
+.body h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 18px 0 6px; }
+.body p { margin: 0; }
+.body ol, .body ul { margin: 0; padding-left: 22px; }
+.body li { margin: 3px 0; }
+.story { background: var(--chip); border-radius: 8px; padding: 10px 12px; }
+.foot { display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: space-between; margin-top: 18px; font-size: .85rem; color: var(--muted); }
+.empty { text-align: center; color: var(--muted); padding: 40px 0; }
+footer.wrap { border-top: 1px solid var(--line); padding-top: 24px; padding-bottom: 48px; color: var(--muted); font-size: .9rem; }
+.v-safe { color: var(--safe); } .v-cappable { color: var(--cappable); } .v-partial { color: var(--partial); } .v-alerts-only { color: var(--alerts-only); }
+@media (max-width: 560px) { summary { grid-template-columns: 1fr; } .pill { justify-self: start; } }
+</style>
+</head>
+<body>
+<header class="wrap">
+  <h1>🧾 BillBrake</h1>
+  <p class="tagline">Hit the brakes before the bill hits you.</p>
+  <p class="lede">What happens when you pass the free tier, and how to put a hard spending cap on __COUNT__ developer services.</p>
+  <div class="meta">
+    <a class="btn" href="https://github.com/__REPO__">★ Star on GitHub</a>
+    <a class="btn" href="https://github.com/__REPO__/blob/main/CONTRIBUTING.md">Add a service</a>
+    <span>Last verified __UPDATED__ · Open source · Every fact has a source</span>
+  </div>
+</header>
+<main class="wrap">
+  <p class="note">Almost every free plan simply stops at its limit. The risk starts once you add a card, so each verdict describes the paid plan. Tap a verdict to filter.</p>
+  <div class="legend" id="legend" aria-label="Filter by verdict"></div>
+  <div class="controls">
+    <input id="q" type="search" placeholder="Search: AWS, OpenAI, Vercel, Firebase..." aria-label="Search services">
+    <select id="cat" aria-label="Filter by category"><option value="">All categories</option></select>
+  </div>
+  <p class="count" id="count" aria-live="polite"></p>
+  <div class="list" id="list"></div>
+</main>
+<footer class="wrap">
+  <p>This guide is community-maintained and checked against official documentation, but providers change their billing often. Always confirm in the provider's own docs before relying on a cap. Not financial advice.</p>
+  <p><a href="https://github.com/__REPO__">GitHub</a> · <a href="https://github.com/__REPO__/issues/new?template=correction.yml">Report a correction</a> · Content licensed CC BY 4.0</p>
+</footer>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(() => {
+  const { entries, verdicts, categories, repo } = JSON.parse(document.getElementById('data').textContent);
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, attrs = {}, ...kids) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === 'class') n.className = v; else if (k === 'text') n.textContent = v; else n.setAttribute(k, v);
+    }
+    for (const kid of kids) if (kid) n.append(kid);
+    return n;
+  };
+  const safeUrl = (u) => (/^https:\/\//.test(u) ? u : '#');
+  const link = (href, text) => el('a', { href: safeUrl(href), rel: 'noopener', target: '_blank', text });
+
+  const active = new Set();
+  for (const [key, v] of Object.entries(verdicts)) {
+    const n = entries.filter((e) => e.verdict === key).length;
+    const b = el('button', { type: 'button', class: `v-${key}`, 'aria-pressed': 'false' }, el('b', { text: `${v.emoji} ${v.label} (${n})` }), document.createTextNode(v.long));
+    b.addEventListener('click', () => {
+      active.has(key) ? active.delete(key) : active.add(key);
+      b.setAttribute('aria-pressed', String(active.has(key)));
+      render();
+    });
+    $('legend').append(b);
+  }
+  for (const c of categories) if (entries.some((e) => e.category === c)) $('cat').append(el('option', { value: c, text: c }));
+
+  const section = (title, node) => (node ? [el('h3', { text: title }), node] : []);
+  const listOf = (tag, items) => (items.length ? el(tag, {}, ...items.map((t) => el('li', { text: t }))) : null);
+
+  const cards = entries.map((e) => {
+    const v = verdicts[e.verdict];
+    const body = el('div', { class: 'body' },
+      ...section('Free tier', el('p', { text: e.free_tier })),
+      ...section('What happens when you go over', el('p', { text: e.over_free_tier })),
+      ...section('Can you set a hard cap?', el('p', { text: e.hard_cap })),
+      ...section('How to set a hard cap', listOf('ol', e.how_to_cap)),
+      ...section('How to set alerts', listOf('ol', e.how_to_alert)),
+      ...section('Charges a cap will not stop', listOf('ul', e.never_capped)),
+      ...section('Watch out for', listOf('ul', e.gotchas)),
+      ...section('It happened to someone', e.story ? el('p', { class: 'story' }, document.createTextNode(`${e.story.text} `), link(e.story.url, 'Source')) : null),
+      ...section('Sources', el('ul', {}, ...e.sources.map((s) => el('li', {}, link(s.url, s.title))))),
+      el('div', { class: 'foot' },
+        el('span', { text: `Last verified ${e.last_verified}` }),
+        el('span', {}, link(`https://github.com/${repo}/issues/new?template=correction.yml&title=${encodeURIComponent(`Correction: ${e.name}`)}`, 'Report a correction'),
+          document.createTextNode(' · '), link(`#${e.id}`, 'Link to this'))));
+    body.querySelectorAll('a[href^="#"]').forEach((a) => a.removeAttribute('target'));
+    const d = el('details', { id: e.id },
+      el('summary', {},
+        el('span', {}, el('span', { class: 'name', text: e.name }), el('span', { class: 'cat', text: e.category })),
+        el('span', { class: `pill v-${e.verdict}`, text: `${v.emoji} ${v.label}` }),
+        el('span', { class: 'sum', text: e.summary })),
+      body);
+    d.addEventListener('toggle', () => { if (d.open) history.replaceState(null, '', `#${e.id}`); });
+    return { e, d, text: [e.name, e.id, e.category, e.summary].join(' ').toLowerCase() };
+  });
+
+  function render() {
+    const q = $('q').value.trim().toLowerCase();
+    const cat = $('cat').value;
+    const shown = cards.filter((c) => (!q || c.text.includes(q)) && (!cat || c.e.category === cat) && (!active.size || active.has(c.e.verdict)));
+    $('list').replaceChildren(...(shown.length ? shown.map((c) => c.d) : [el('p', { class: 'empty', text: 'No service matches. Want it added? Open an issue on GitHub.' })]));
+    $('count').textContent = `Showing ${shown.length} of ${cards.length} services`;
+  }
+  $('q').addEventListener('input', render);
+  $('cat').addEventListener('change', render);
+  render();
+
+  const openHash = () => {
+    const c = cards.find((x) => `#${x.e.id}` === location.hash);
+    if (!c) return;
+    if (!c.d.isConnected) { $('q').value = ''; $('cat').value = ''; active.clear(); document.querySelectorAll('.legend button').forEach((b) => b.setAttribute('aria-pressed', 'false')); render(); }
+    c.d.open = true;
+    c.d.scrollIntoView({ block: 'start' });
+  };
+  window.addEventListener('hashchange', openHash);
+  openHash();
+})();
+</script>
+</body>
+</html>

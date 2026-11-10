@@ -1,0 +1,43 @@
+{
+  "id": "planetscale",
+  "name": "PlanetScale",
+  "category": "Database",
+  "website": "https://planetscale.com",
+  "verdict": "alerts-only",
+  "summary": "PlanetScale has no free plan and no spending cap; you can only turn on email spend alerts.",
+  "free_tier": "There is no free tier. PlanetScale removed its free Hobby plan in 2024: new Hobby databases could not be created after March 6, 2024, and existing ones had to upgrade by April 8, 2024 or be put to sleep. Every database now needs a paid plan and a valid payment method. The cheapest option is a single-node Postgres database, which starts at $5 per month.",
+  "over_free_tier": "There is no free tier to go past. You pay for each database's cluster size every month, plus extra usage such as storage above the included amount, development branches, extra production branches, user-scheduled backups and egress. Charges go to your card on file. Nothing stops automatically when costs rise.",
+  "hard_cap": "No. PlanetScale only offers spend alerts. They email organization administrators when monthly spend reaches 75% and 100% of the maximum you enter. The docs do not say that anything stops when you reach it.",
+  "how_to_cap": [],
+  "how_to_alert": [
+    "Go to your PlanetScale dashboard and select your organization.",
+    "Click Settings in the top nav.",
+    "Click Billing in the side nav.",
+    "Click the checkbox next to Enable spend alerts.",
+    "Type in the max budget and click Save. Organization administrators get an email at 75% and 100% of that monthly amount."
+  ],
+  "never_capped": [
+    "Everything. Spend alerts only send emails.",
+    "Storage on network-attached storage databases grows automatically and is billed above the included amount",
+    "Development branches and extra production branches",
+    "User-scheduled backups",
+    "Egress"
+  ],
+  "gotchas": [
+    "Old tutorials that say PlanetScale is free are out of date. The free Hobby plan ended in 2024.",
+    "Each extra production branch is billed at the price of its cluster size.",
+    "Postgres development branches are billed while they run. Delete ones you do not need.",
+    "Network-attached storage autoscales, so a growing database raises your bill without warning.",
+    "If you use a coupon, usage beyond the coupon's terms is charged to your card.",
+    "Prepaid cards are not accepted."
+  ],
+  "story": null,
+  "sources": [
+    { "title": "PlanetScale Docs: Billing (Spend management)", "url": "https://planetscale.com/docs/billing" },
+    { "title": "PlanetScale Docs: PlanetScale plans", "url": "https://planetscale.com/docs/planetscale-plans" },
+    { "title": "PlanetScale Docs: Hobby plan deprecation FAQ", "url": "https://planetscale.com/docs/plans/hobby-plan-deprecation-faq" },
+    { "title": "PlanetScale Pricing", "url": "https://planetscale.com/pricing" },
+    { "title": "PlanetScale Changelog: Monthly spend alerts", "url": "https://planetscale.com/changelog/monthly-spend-alerts" }
+  ],
+  "last_verified": "2026-11-09"
+}

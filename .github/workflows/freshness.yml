@@ -1,0 +1,33 @@
+name: Freshness check
+
+on:
+  schedule:
+    - cron: "0 7 1 * *" # first day of every month
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Open an issue for entries not verified in 120 days
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          list="$(node scripts/build.mjs --stale 120)"
+          if [ -z "$list" ]; then
+            echo "Everything was verified in the last 120 days."
+            exit 0
+          fi
+          body="These entries have not been checked against the official docs in 120 days. Pick one, verify it, update \`last_verified\` and open a pull request.
+
+          $list"
+          gh issue create --title "Monthly freshness check: entries to re-verify" --label "freshness" --body "$body" \
+            || gh issue create --title "Monthly freshness check: entries to re-verify" --body "$body"

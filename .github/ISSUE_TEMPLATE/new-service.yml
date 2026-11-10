@@ -1,0 +1,15 @@
+name: Request a service
+description: Ask for a service to be added to the guide.
+labels: ["new service"]
+body:
+  - type: input
+    id: service
+    attributes:
+      label: Service name and website
+      placeholder: Example Cloud, https://example.com
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything you already know about its free tier or spending caps

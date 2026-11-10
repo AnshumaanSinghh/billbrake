@@ -1,0 +1,56 @@
+{
+  "id": "aws",
+  "name": "Amazon Web Services (AWS)",
+  "category": "Cloud",
+  "website": "https://aws.amazon.com",
+  "verdict": "alerts-only",
+  "summary": "On a normal Paid plan AWS has no spending cap, so you can be charged without limit. Only the time-limited Free plan guarantees you pay nothing.",
+  "free_tier": "When you sign up, you choose the Free plan or the Paid plan. New customers get USD $100 in credits on either plan and can earn up to $100 more by completing activities. More than 30 services also have monthly free usage limits. The Free plan lasts six months or until your credits run out, whichever comes first. The Free plan only gives access to some services.",
+  "over_free_tier": "On the Free plan you are not charged. When the six months end or your credits run out, AWS closes the account automatically and you lose access to your resources and data. AWS keeps your content for 90 days. You can upgrade to the Paid plan during that time to keep the account. On the Paid plan, AWS charges normal pay-as-you-go prices for any usage beyond your credits, and for services that credits do not cover. Nothing stops automatically.",
+  "hard_cap": "No, not on the Paid plan. AWS Budgets only send alerts unless you add budget actions. A budget action can apply an IAM policy (for example, one that blocks launching new EC2 instances), apply a service control policy (management accounts only), or stop specific EC2 or RDS instances. None of these stop all charges. Budgets use billing data that is updated at least once per day, so alerts and actions can come late. The only setup where you cannot be charged is the Free plan, and it lasts six months at most.",
+  "how_to_cap": [
+    "When you create a new AWS account, choose the Free plan, not the Paid plan. On the Free plan you are not charged.",
+    "Check your remaining credits and plan end date on the AWS Billing and Cost Management console home page.",
+    "Do not join AWS Organizations, set up an AWS Control Tower landing zone, or take the other actions AWS lists, unless you want to leave the Free plan. They upgrade the account to the Paid plan automatically.",
+    "There is no way to set a spending cap after you move to the Paid plan. Use budgets and budget actions as a safety net only."
+  ],
+  "how_to_alert": [
+    "Open the Billing and Cost Management console at https://console.aws.amazon.com/cost-management/.",
+    "In the navigation pane, choose Budgets.",
+    "Choose Create budget.",
+    "Under Budget setup, choose Use a template (simplified).",
+    "Under Templates, choose Zero spend budget (alerts you when spending goes past the AWS Free Tier limits) or Monthly cost budget (alerts you when you go over, or are forecast to go over, an amount you set).",
+    "Fill in the email recipients and choose Create budget.",
+    "Optional: to add a budget action, edit the budget. At the Configure alerts step, under Attach actions - Optional, choose Add Action. Pick an IAM role, then choose the action type: apply an IAM policy, attach a service control policy, or target specific EC2 or RDS instances.",
+    "For Free Tier usage emails: open the Billing console, under Preferences choose Billing preferences, choose Edit next to Alert preferences, select Receive AWS Free Tier alerts, then choose Update."
+  ],
+  "never_capped": [
+    "Storage for Amazon EBS volumes still costs money when an EC2 instance is stopped.",
+    "Elastic IP addresses linked to a stopped instance are still charged.",
+    "Any resource that a budget action does not target keeps running and keeps charging.",
+    "Usage that happens before billing data updates (at least once per day) is charged even if a budget action fires later."
+  ],
+  "gotchas": [
+    "Budgets do not stop spending on their own. They only email you unless you set up budget actions.",
+    "If a budget action stops an EC2 instance that is in an Auto Scaling group, Auto Scaling restarts it or launches a new one. AWS says shutdown actions do not work for those instances.",
+    "Stopping an EC2 instance does not stop storage charges. To stop all charges, delete the resources you no longer need.",
+    "Free plan accounts close automatically at the end. AWS deletes the account and its data 90 days after closing unless you upgrade.",
+    "On the Paid plan, credits do not apply to every service. Usage of services that credits do not cover is billed right away.",
+    "Some actions, like joining AWS Organizations, move a Free plan account to the Paid plan automatically."
+  ],
+  "story": {
+    "text": "In 2024 a developer created one private, empty S3 bucket for a test. An open-source tool used the same bucket name by default and sent almost 100 million write requests to it. All were rejected, but AWS charged for them, and he got a bill of over $1,300 in one day. After the story spread, AWS said it would stop charging for unauthorized requests that customers did not start.",
+    "url": "https://www.theregister.com/2024/05/01/aws_s3_bucket_abuse/"
+  },
+  "sources": [
+    { "title": "AWS Billing: Choosing an AWS Free Tier plan", "url": "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/free-tier-plans.html" },
+    { "title": "AWS Billing: Tracking your AWS Free Tier usage", "url": "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/tracking-free-tier-usage.html" },
+    { "title": "AWS Cost Management: Using a budget template (simplified)", "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/budget-templates.html" },
+    { "title": "AWS Cost Management: Configuring budget actions", "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-controls.html" },
+    { "title": "AWS Cost Management: Configuring a budget action", "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-action-configure.html" },
+    { "title": "AWS Cost Management: Best practices for AWS Budgets", "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-best-practices.html" },
+    { "title": "Amazon EC2: How instance stop and start works", "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/how-ec2-instance-stop-start-works.html" },
+    { "title": "The Register: AWS customer faces staggering charges over S3 bucket misfire", "url": "https://www.theregister.com/2024/05/01/aws_s3_bucket_abuse/" }
+  ],
+  "last_verified": "2026-11-09"
+}

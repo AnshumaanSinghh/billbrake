@@ -1,0 +1,51 @@
+{
+  "id": "openai",
+  "name": "OpenAI API",
+  "category": "AI",
+  "website": "https://platform.openai.com",
+  "verdict": "cappable",
+  "summary": "The OpenAI API runs on prepaid credits, and you can set a monthly spend limit with \"Enforce a hard limit\" turned on so requests fail once you reach it.",
+  "free_tier": "OpenAI does not clearly promise free API usage. Its rate-limit docs list a \"Free\" usage tier for users in allowed regions, but they do not say it comes with free credits. In practice, plan to buy prepaid credits before you build. The ChatGPT app and the API are billed separately.",
+  "over_free_tier": "API usage is paid from a prepaid credit balance. You buy credits first (OpenAI's help center lists a $5 minimum). When the balance is used up, requests fail with a credit_balance_exhausted error, unless auto recharge buys more credits for you. OpenAI's help center warns that access may not stop the instant credits run out. Usage processed during that delay can show up as a negative balance, which is taken from your next purchase.",
+  "hard_cap": "Yes. You can set a monthly spend limit for the whole organization or for one project. It only blocks requests if you turn on \"Enforce a hard limit\". Then requests over the limit return a 429 error (organization_spend_limit_exceeded or project_spend_limit_exceeded) until the next monthly cycle or until you raise the limit. OpenAI says enforcement is not instantaneous, so recorded spend can go slightly over. A limit without the hard-limit toggle, and spend alerts, only notify you. Separately, prepaid credits with auto recharge turned off also act like a cap, with the small negative-balance delay described above.",
+  "how_to_cap": [
+    "Organization-wide: open the Organization limits page (platform.openai.com/settings/organization/limits).",
+    "Under Spend, select Edit spend limit.",
+    "Enter the Monthly spend limit.",
+    "Turn on Enforce a hard limit. Without this toggle, the limit does not stop requests.",
+    "Select Save.",
+    "For one project only: go to Project settings, select Limits, then follow the same steps under Spend (Edit spend limit, Monthly spend limit, Enforce a hard limit, Save).",
+    "Also check auto recharge on your organization's billing settings page. Turn it off if you do not want new credits bought automatically. If you keep it on, set its optional monthly recharge limit."
+  ],
+  "how_to_alert": [
+    "OpenAI supports spend alerts that send a notification at a threshold you choose. They do not stop API traffic.",
+    "Set alerts on the same spend limit settings (Organization limits, or Project settings then Limits). OpenAI recommends thresholds that leave you time to react before a hard limit is reached. The docs do not list click-by-click steps for alerts."
+  ],
+  "never_capped": [
+    "Usage processed in the short delay after credits run out. It can become a negative balance that is taken from your next purchase.",
+    "Small overage past a hard spend limit, because enforcement is not instantaneous.",
+    "Credits bought by auto recharge. A spend limit blocks requests, but auto recharge is a separate setting that buys credits."
+  ],
+  "gotchas": [
+    "Auto recharge is turned on by default during billing setup, according to OpenAI's help center. Turn it off if you want your prepaid balance to be your limit.",
+    "A monthly spend limit only stops requests if Enforce a hard limit is turned on. Otherwise it behaves like an alert.",
+    "The optional monthly recharge limit only limits automatic credit purchases. It is not a cap on usage, and manual purchases do not count toward it.",
+    "An OpenAI support reply on the community forum says that with auto recharge on, expired credits are treated like running out of balance, which can trigger a recharge.",
+    "Purchased credits expire after 1 year and are non-refundable, according to OpenAI's help center.",
+    "OpenAI also sets its own approved monthly usage limit for each organization based on usage tier. That is separate from the spend limit you set.",
+    "A leaked API key can spend your balance and trigger auto recharge. Keep keys on the server, never in front-end code or public repos, and use one project per app so one leak hits one project limit."
+  ],
+  "story": {
+    "text": "In October 2026 the AI tool OpenCode said an intruder reached a legacy system where some users had saved their OpenAI, Anthropic and Google API keys. The Hacker News reported that one user said his OpenAI key was used for $281 (and his Anthropic key for $168). These are users' own claims, and OpenCode said the keys \"may have been exposed\".",
+    "url": "https://thehackernews.com/2026/10/opencode-console-breach-may-have.html"
+  },
+  "sources": [
+    { "title": "OpenAI API docs: Spend limits", "url": "https://developers.openai.com/api/docs/guides/spend-limits" },
+    { "title": "OpenAI API docs: Rate limits and usage tiers", "url": "https://developers.openai.com/api/docs/guides/rate-limits" },
+    { "title": "OpenAI Help Center: Setting up and managing prepaid API billing", "url": "https://help.openai.com/en/articles/8264644-setting-up-and-managing-prepaid-api-billing" },
+    { "title": "OpenAI Help Center: Managing projects in the API platform", "url": "https://help.openai.com/en/articles/9186755-managing-projects-in-the-api-platform" },
+    { "title": "OpenAI Developer Community: Expired credits and auto-recharge (OpenAI Support reply)", "url": "https://community.openai.com/t/expired-credits-and-auto-recharge/1332368/6" },
+    { "title": "The Hacker News: OpenCode Console breach may have exposed OpenAI, Anthropic, and Google API keys", "url": "https://thehackernews.com/2026/10/opencode-console-breach-may-have.html" }
+  ],
+  "last_verified": "2026-11-09"
+}

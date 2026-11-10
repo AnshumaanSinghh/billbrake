@@ -1,0 +1,45 @@
+{
+  "id": "render",
+  "name": "Render",
+  "category": "Hosting",
+  "website": "https://render.com",
+  "verdict": "partial",
+  "summary": "Render has a spend limit only for build minutes; once you add a payment method, extra bandwidth is billed with no cap.",
+  "free_tier": "You can run web services, Postgres databases, Key Value instances and static sites on Free instances. Each workspace gets a monthly pool of free instance hours, plus some included outbound bandwidth and build pipeline minutes. The Hobby workspace plan has no monthly fee. Free web services spin down after 15 minutes without traffic. Free Postgres databases expire 30 days after creation.",
+  "over_free_tier": "If you use all free instance hours, Render suspends your Free web services until the next month. If you use all included bandwidth, Render bills you for the extra, or suspends your services for the rest of the month if you have no payment method. If you use all build minutes, Render buys more for you until you hit your spend limit; with no payment method or at the limit, new builds stop for the rest of the month. Paid instances are billed per second at a fixed rate per instance.",
+  "hard_cap": "Only for build pipeline minutes. You can set a monthly spend limit, and when you reach it Render stops running builds until the next billing period. Running services keep serving. The docs describe no spend limit for bandwidth or instances. The only way to make sure nothing is billed is to not add a payment method, which also means you can only use free resources.",
+  "how_to_cap": [
+    "In the Render Dashboard, go to your Workspace Settings page.",
+    "In the Build Pipeline section, click Set spend limit (or Edit if a limit already exists).",
+    "Enter your limit in the dialog.",
+    "Note: this caps build minutes only. Bandwidth and instances are not covered."
+  ],
+  "how_to_alert": [
+    "Render emails you when you are approaching a usage limit, and again if you go over it. There is nothing to set up.",
+    "To check usage, open your workspace in the Render Dashboard and click Billing in the left pane. It shows accrued charges and usage against free instance hours, outbound bandwidth and build pipeline minutes."
+  ],
+  "never_capped": [
+    "Outbound bandwidth beyond the included amount, once a payment method is on file.",
+    "Paid instances, billed for as long as they run.",
+    "Extra instances added by autoscaling (Pro workspaces and higher), each billed at the full instance rate up to the maximum you set.",
+    "Workspace plan fees, if you are on a paid workspace plan, and extra custom domains beyond those included."
+  ],
+  "gotchas": [
+    "Free services can still lead to a bandwidth bill if your workspace has a payment method on file.",
+    "Free Postgres databases expire after 30 days. After a 14-day grace period, Render deletes the database and its data unless you upgrade.",
+    "Files written to a Free web service's local disk are lost when it spins down.",
+    "When you set an autoscaling range, the maximum instance count is effectively your compute ceiling. Set it carefully.",
+    "Render's FAQ says it does not bill for bandwidth usage caused by a DDoS attack. Other bandwidth beyond the included amount, including a normal traffic spike, is billed."
+  ],
+  "story": null,
+  "sources": [
+    { "title": "Render Docs: Deploy for Free", "url": "https://render.com/docs/free" },
+    { "title": "Render Docs: FAQ", "url": "https://render.com/docs/faq" },
+    { "title": "Render Docs: Build Pipeline", "url": "https://render.com/docs/build-pipeline" },
+    { "title": "Render Docs: Outbound Bandwidth", "url": "https://render.com/docs/outbound-bandwidth" },
+    { "title": "Render Docs: The Render Dashboard", "url": "https://render.com/docs/render-dashboard" },
+    { "title": "Render Docs: Scaling", "url": "https://render.com/docs/scaling" },
+    { "title": "Render Docs: Platform Features by Plan", "url": "https://render.com/docs/new-workspace-plans" }
+  ],
+  "last_verified": "2026-11-09"
+}
